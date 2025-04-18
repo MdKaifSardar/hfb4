@@ -1,4 +1,9 @@
 "use server"
+import { createGoogleGenerativeAI } from "@ai-sdk/google"
+import { type NextRequest, NextResponse } from "next/server"
+import { generateText } from "ai"
+
+
 
 import { revalidatePath } from "next/cache"
 
@@ -107,17 +112,62 @@ export async function getPdfById(id: string) {
 }
 
 // Mock function to summarize a PDF using Gemini AI
-export async function summarizePdf(pdfUrl: string) {
-  // In a real app, this would use the Gemini AI API to summarize the PDF
-  console.log("Summarizing PDF:", pdfUrl)
+// export async function summarizePdf(pdfUrl: string) {
+//   // In a real app, this would use the Gemini AI API to summarize the PDF
+//   console.log("Summarizing PDF:", pdfUrl)
 
-  // Simulate a delay
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+//   // Simulate a delay
+//   await new Promise((resolve) => setTimeout(resolve, 3000))
 
-  // Return a mock summary
-  return {
-    summary:
-      "This paper explores cutting-edge machine learning algorithms and their applications in various domains...",
+//   // Return a mock summary
+//   return {
+//     summary:
+//       "This paper explores cutting-edge machine learning algorithms and their applications in various domains...",
+//   }
+// }
+export async function POST(request: NextRequest) {
+  try {
+    const formData = await request.formData()
+    const pdfFile = formData.get("pdf") as File
+
+    if (!pdfFile || !pdfFile.type.includes("pdf")) {
+      return NextResponse.json({ error: "Please upload a valid PDF file" }, { status: 400 })
+    }
+
+    // Convert the file to ArrayBuffer
+    const arrayBuffer = await pdfFile.arrayBuffer()
+    const fileBuffer = Buffer.from(arrayBuffer)
+
+    // Initialize the Google Generative AI model
+    const gemini = createGoogleGenerativeAI({
+      apiKey: process.env.GOOGLE_AI_API_KEY!,
+    })
+
+    // Generate summary using Gemini
+    const { text: summary } = await generateText({
+      model: gemini("gemini-1.5-pro"),
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "Please provide a comprehensive summary of this research paper and show  heading for the research paper. Include the main research question, methodology, key findings, and implications. Format the summary in clear paragraphs.",
+            },
+            {
+              type: "file",
+              data: fileBuffer,
+              mimeType: "application/pdf",
+            },
+          ],
+        },
+      ],
+    })
+
+    return NextResponse.json({ summary })
+  } catch (error) {
+    console.error("Error processing PDF:", error)
+    return NextResponse.json({ error: "Failed to process the PDF file" }, { status: 500 })
   }
 }
 
