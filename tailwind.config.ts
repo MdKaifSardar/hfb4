@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import type { ThemeConfig } from "tailwindcss/types/config";
 
 const config: Config = {
   darkMode: ["class"],
@@ -82,7 +83,7 @@ const config: Config = {
         "fade-in": "fadeIn 0.5s ease-in-out",
         "slide-up": "slideUp 0.5s ease-in-out",
       },
-      typography: (theme) => ({
+      typography: (theme: (path: string) => string) => ({
         DEFAULT: {
           css: {
             maxWidth: "none",
@@ -130,4 +131,4 @@ const config: Config = {
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 }
 
-export default config
+export default config;
