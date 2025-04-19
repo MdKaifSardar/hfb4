@@ -3,6 +3,7 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google"
 import { type NextRequest, NextResponse } from "next/server"
 import { generateText } from "ai"
 
+//abcd
 
 
 import { revalidatePath } from "next/cache"
