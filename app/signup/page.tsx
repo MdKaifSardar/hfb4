@@ -66,7 +66,7 @@ export default function SignUpPage() {
       <header className="border-b dark:border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
-            AcademiShare
+            TokenThesis
           </Link>
           <ThemeToggle />
         </div>

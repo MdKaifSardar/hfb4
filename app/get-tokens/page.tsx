@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from "react"
 import { ethers } from 'ethers';
 
 const adminWalletAddress = '0x390498d0c9ea68c5467f82Eca46235B64FcCB542'; // Replace with your actual wallet address
@@ -11,8 +11,14 @@ const TokenBuyPage = () => {
   const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
   const [isBuying, setIsBuying] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   const totalPrice = (tokenAmount * ethPrice).toFixed(4);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    setUserEmail(storedEmail);
+  }, []);
 
   const connectWallet = async () => {
     if (typeof window.ethereum !== 'undefined') {
@@ -32,6 +38,11 @@ const TokenBuyPage = () => {
   const buyTokens = async () => {
     if (!connectedAccount) {
       alert('Please connect your wallet first');
+      return;
+    }
+
+    if (!userEmail) {
+      alert('User email not found. Please sign in again.');
       return;
     }
 

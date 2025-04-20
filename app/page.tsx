@@ -8,7 +8,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       <header className="border-b dark:border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">AcademiShare</h1>
+          <h1 className="text-2xl font-bold">TokenThesis</h1>
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <Link href="/signin">
@@ -25,11 +25,10 @@ export default function HomePage() {
         <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 dark:text-white animate-fadeIn">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 dark:text-blue-100">
-              Academic Knowledge Sharing Made Simple
+              Funding of Research Papers
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto">
-              A platform where professors can share academic papers and students can access AI-generated summaries for
-              quick understanding.
+            A decentralized Web3 platform where researchers submit proposals, AI generates unbiased summaries, and token holders vote on funding through DAO governance. All proposals, votes, and fund disbursements are transparently recorded on-chain.
             </p>
             <Link href="/signup">
               <Button size="lg" className="px-8 dark:button-glow">
@@ -47,27 +46,27 @@ export default function HomePage() {
                 <div className="bg-primary/10 dark:bg-primary/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-primary font-bold text-xl">1</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 dark:text-white">Professors Upload PDFs</h3>
+                <h3 className="text-xl font-semibold mb-3 dark:text-white">Submit Proposal</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Professors can upload academic papers and research documents in PDF format.
+                Researchers upload their proposals (PDF/text), which are stored on IPFS and hashed on-chain.
                 </p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-800 dark:shadow-glow p-6 rounded-lg text-center transition-all duration-300 dark:hover-glow">
                 <div className="bg-primary/10 dark:bg-primary/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-primary font-bold text-xl">2</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 dark:text-white">AI Generates Summaries</h3>
+                <h3 className="text-xl font-semibold mb-3 dark:text-white">AI Summarization</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Our platform uses Gemini AI to automatically generate concise summaries of the uploaded documents.
+                An AI model summarizes each proposal into key points like objectives, methods, and impact for fair evaluation.
                 </p>
               </div>
               <div className="bg-gray-50 dark:bg-gray-800 dark:shadow-glow p-6 rounded-lg text-center transition-all duration-300 dark:hover-glow">
                 <div className="bg-primary/10 dark:bg-primary/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-primary font-bold text-xl">3</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 dark:text-white">Users Access Content</h3>
+                <h3 className="text-xl font-semibold mb-3 dark:text-white">Community Voting & Funding</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Users can browse through summaries and access the full PDFs for in-depth reading.
+                Token holders review summaries, vote via DAO, and winning proposals automatically receive funds through smart contracts.
                 </p>
               </div>
             </div>
@@ -77,7 +76,7 @@ export default function HomePage() {
 
       <footer className="bg-gray-100 dark:bg-gray-800 py-8">
         <div className="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
-          <p>© 2025 AcademiShare. All rights reserved.</p>
+          <p>© 2025 TokenThesis. All rights reserved.</p>
         </div>
       </footer>
     </div>

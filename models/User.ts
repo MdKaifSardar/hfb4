@@ -6,6 +6,7 @@ export interface IUser extends Document {
     email: string
     password: string
     role: "user" | "professor"
+    tokenBalance?: number
 }
 
 const UserSchema = new Schema<IUser>({
@@ -13,6 +14,7 @@ const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "professor"], default: "user" },
+    tokenBalance: { type: Number, default: 0 },
 }, { collection: "users" });
 
 export default mongoose.models.User || mongoose.model<IUser>("User", UserSchema);

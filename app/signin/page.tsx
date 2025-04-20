@@ -41,6 +41,7 @@ export default function SignInPage() {
     try {
       // In a real app, this would call a server action to authenticate the user
       const user = await signIn(values)
+      localStorage.setItem("userEmail", values.email);
 
       // Redirect based on role
       if (user.role === "professor") {
@@ -61,7 +62,7 @@ export default function SignInPage() {
       <header className="border-b dark:border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
-            AcademiShare
+            TokenThesis
           </Link>
           <ThemeToggle />
         </div>
