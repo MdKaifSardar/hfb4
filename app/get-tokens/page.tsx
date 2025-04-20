@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { ethers } from 'ethers';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addTokensToUser } from '@/lib/actions/user.actions';
 
 const adminWalletAddress = '0x390498d0c9ea68c5467f82Eca46235B64FcCB542'; // Replace with your actual wallet address
 
@@ -29,15 +32,16 @@ const TokenBuyPage = () => {
         setConnectedAccount(accounts[0]);
       } catch (err) {
         console.error('User rejected wallet connection', err);
+        toast.error('Wallet connection rejected');
       }
     } else {
-      alert('MetaMask is not installed');
+      toast.error('MetaMask is not installed');
     }
   };
 
   const buyTokens = async () => {
     if (!connectedAccount) {
-      alert('Please connect your wallet first');
+      toast.error('Please connect your wallet first');
       return;
     }
 
@@ -59,10 +63,21 @@ const TokenBuyPage = () => {
 
       await tx.wait();
       setTxHash(tx.hash);
+
+      // Get userId from localStorage
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        throw new Error('User ID not found in localStorage');
+      }
+
+      // Add tokens to the user's database
+      await addTokensToUser(userId, tokenAmount);
+
+      toast.success('Tokens purchased and added to your account successfully!');
       setTokenAmount(1);
     } catch (err) {
       console.error('Transaction failed:', err);
-      alert('Transaction failed');
+      toast.error('Transaction failed. Please try again.');
     } finally {
       setIsBuying(false);
     }
@@ -70,6 +85,7 @@ const TokenBuyPage = () => {
 
   return (
     <div className="max-w-md mx-auto mt-12 p-6 rounded-lg shadow-lg border bg-white dark:bg-gray-900 dark:border-gray-700">
+      <ToastContainer />
       <h2 className="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">
         Buy Tokens
       </h2>

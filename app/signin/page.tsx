@@ -9,8 +9,8 @@ import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signIn } from "@/lib/actions"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { signIn } from "@/lib/actions/user.actions"
 
 const signInSchema = z.object({
   email: z.string().email({
@@ -39,12 +39,13 @@ export default function SignInPage() {
     setError("")
 
     try {
-      // In a real app, this would call a server action to authenticate the user
-      const user = await signIn(values)
-      localStorage.setItem("userEmail", values.email);
+      const { id, role } = await signIn(values)
+
+      // Save userId to localStorage
+      localStorage.setItem("userId", id)
 
       // Redirect based on role
-      if (user.role === "professor") {
+      if (role === "professor") {
         router.push("/professor/dashboard")
       } else {
         router.push("/user/feed")

@@ -2,11 +2,11 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IUser extends Document {
-    name: string
-    email: string
-    password: string
-    role: "user" | "professor"
-    tokenBalance?: number
+    name: string;
+    email: string;
+    password: string;
+    role: "user" | "professor";
+    tokens?: number; // Add tokens field
 }
 
 const UserSchema = new Schema<IUser>({
@@ -14,7 +14,7 @@ const UserSchema = new Schema<IUser>({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "professor"], default: "user" },
-    tokenBalance: { type: Number, default: 0 },
+    tokens: { type: Number, default: 0 }, // Default token balance is 0
 }, { collection: "users" });
 
 export default mongoose.models.User || mongoose.model<IUser>("User", UserSchema);

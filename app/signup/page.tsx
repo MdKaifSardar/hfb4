@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { createUser } from "@/lib/actions"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { createUser } from "@/lib/actions/user.actions"
 
 const signUpSchema = z.object({
   name: z.string().min(2, {
@@ -45,8 +45,10 @@ export default function SignUpPage() {
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     setIsLoading(true)
     try {
-      // In a real app, this would call a server action to create the user
-      await createUser(values)
+      const { id } = await createUser(values)
+
+      // Save userId to localStorage
+      localStorage.setItem("userId", id)
 
       // Redirect based on role
       if (values.role === "professor") {
