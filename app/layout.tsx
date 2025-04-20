@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "AcademiShare - Academic Knowledge Sharing",
-  description: "A platform for sharing and summarizing academic papers",
+  title: "TokenThesis",
+  description: "A decentralized Web3 platform where researchers submit proposals, AI generates unbiased summaries, and token holders vote on funding through DAO governance. All proposals, votes, and fund disbursements are transparently recorded on-chain.",
     generator: 'v0.dev'
 }
 
