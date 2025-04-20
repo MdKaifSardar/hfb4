@@ -107,7 +107,7 @@ export default function UserFeed() {
     <div className="flex min-h-screen flex-col">
     <header className="border-b dark:border-gray-800">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold">AcademiShare</Link>
+        <Link href="/" className="text-2xl font-bold">TokenThesis</Link>
         <div className="flex items-center space-x-2">
           <ThemeToggle />
           <Button variant="ghost" onClick={handleSignOut}>
@@ -120,7 +120,7 @@ export default function UserFeed() {
 
     <main className="flex-1 container mx-auto px-4 py-8 dark:bg-gray-900">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold dark:text-white">Academic Summaries</h1>
+        <h1 className="text-3xl font-bold dark:text-white">Overview</h1>
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
