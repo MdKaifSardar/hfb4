@@ -1,17 +1,17 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Upload, LogOut } from "lucide-react"
-import { uploadPdf } from "@/lib/actions"
+import { createPaper } from "@/lib/actions/paper.actions"
 import { PdfList } from "@/components/pdf-list"
 import { ThemeToggle } from "@/components/theme-toggle"
 
@@ -21,7 +21,6 @@ export default function ProfessorDashboard() {
   const [uploadProgress, setUploadProgress] = useState(0)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
-  // Mock data for uploaded PDFs
   const uploadedPdfs = [
     {
       id: "1",
@@ -50,36 +49,39 @@ export default function ProfessorDashboard() {
   }
 
   const handleUpload = async () => {
-    if (!selectedFile) return
+    if (!selectedFile) {
+      toast.error("Please select a PDF file to upload.")
+      return
+    }
 
     setIsUploading(true)
     setUploadProgress(0)
 
-    // Simulate upload progress
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 95) {
-          clearInterval(interval)
-          return 95
-        }
-        return prev + 5
-      })
-    }, 200)
-
     try {
-      // In a real app, this would call a server action to upload the PDF
-      await uploadPdf(selectedFile)
+      const userId = localStorage.getItem("userId")
+      if (!userId) {
+        toast.error("User ID not found. Please sign in again.")
+        router.push("/signin") // Redirect to sign-in page if userId is missing
+        return
+      }
 
-      setUploadProgress(100)
-      setTimeout(() => {
-        setIsUploading(false)
-        setUploadProgress(0)
-        setSelectedFile(null)
-      }, 500)
+      const result = await createPaper({
+        pdfFile: selectedFile,
+        userId, // Pass userId correctly
+      })
+
+      if (result.error) {
+        throw new Error(result.error)
+      }
+
+      toast.success("Paper uploaded successfully!")
+      setSelectedFile(null)
+      router.refresh() // Refresh the page to show the new paper
     } catch (error) {
       console.error("Upload failed:", error)
+      toast.error("Failed to upload the paper. Please try again.")
     } finally {
-      clearInterval(interval)
+      setIsUploading(false)
     }
   }
 
@@ -90,6 +92,7 @@ export default function ProfessorDashboard() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <ToastContainer />
       <header className="border-b dark:border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">

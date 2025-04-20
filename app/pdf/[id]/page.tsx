@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowLeft, Download, LogOut } from "lucide-react"
-import { getPdfById } from "@/lib/actions"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { getPdfById } from "@/lib/actions/paper.actions"
 
 export default function PdfViewerPage() {
   const router = useRouter()
